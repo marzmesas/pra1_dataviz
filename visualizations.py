@@ -3,6 +3,7 @@ import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 import streamlit as st
 
+
 def rental_properties_pie_chart(df, year):
     apt_yearly = df.groupby(['year','Type'])['Type'].count().to_frame().rename(columns={'Type':'count'}).reset_index()
     # Filter data for the given year
@@ -29,7 +30,7 @@ def rental_properties_pie_chart(df, year):
         font=dict(
             family='Arial, sans-serif',  # Modern font family
             size=14,
-            color='#333333'  # Dark grey text color
+            color='#ffffff'  # Dark grey text color
         ),
         margin=dict(l=60, r=10, t=10, b=0),  # Adjust margins
         annotations=[dict(
@@ -50,8 +51,8 @@ def room_vs_rent(df):
 
     # Create the Plotly barplot
     fig = px.bar(room_type_rent, x='Type', y='Rent', 
-                title='Room Type vs Average Rent',
-                labels={'Type': 'Room Type', 'Rent': 'Average Rent'},
+                title='Tipo de Alojamiento vs Precio del Alquiler',
+                labels={'Type': 'Tipo de Alojamiento', 'Rent': 'Precio del Alquiler'},
                 color='Rent',
                 color_continuous_scale='Viridis')  # More modern color scale
 
@@ -62,7 +63,7 @@ def room_vs_rent(df):
         font=dict(
             family='Arial, sans-serif',  # Modern font family
             size=15,
-            color='#333333'  # Dark grey text color
+            color='#ffffff'  # Dark grey text color
         ),
         title={
             'y':0.9,
@@ -81,7 +82,7 @@ def room_vs_rent(df):
             y=row['Rent'] + 70000,  # Adjust this value to position the annotation
             text=f"{row['Rent']:,.2f}",
             showarrow=False,
-            font=dict(size=12, color='black')
+            font=dict(size=12, color='white')
         )
 
     # Show the plot
@@ -93,8 +94,8 @@ def top_n_locations(df, n_loc):
 
     # Create the Plotly barplot
     fig = px.bar(locations_rent, x='Location', y='Rent_per_sqft', 
-                title=f'Top {n_loc} Locations with Highest Average Rent per Sqft',
-                labels={'Location': 'Location', 'Rent_per_sqft': 'Rent per Sqft'},
+                title=f'Top {n_loc} ubicaciones más caras en relación a superficie alquilada',
+                labels={'Location': 'Ubicación', 'Rent_per_sqft': 'Alquiler por sqft'},
                 color='Rent_per_sqft',
                 color_continuous_scale='tealrose')  # Updated color scale
 
@@ -105,7 +106,7 @@ def top_n_locations(df, n_loc):
         font=dict(
             family='Arial, sans-serif',  # Modern font family
             size=14,
-            color='#333333'  # Dark grey text color
+            color='#ffffff'  # Dark grey text color
         ),
         title={
             'y': 0.95,
@@ -126,7 +127,7 @@ def top_n_locations(df, n_loc):
             y=row['Rent_per_sqft'] + y_offset,
             text=f"{row['Rent_per_sqft']:,.2f}",
             showarrow=False,
-            font=dict(size=12, color='black')
+            font=dict(size=12, color='white')
         )
 
     # Rotate x-axis labels for better readability
@@ -153,7 +154,7 @@ def city_area_rent_graph(df):
         font=dict(
             family='Arial, sans-serif',  # Modern font family
             size=14,
-            color='#333333'  # Dark grey text color
+            color='#ffffff'  # Dark grey text color
         ),
         title={
             'y': 0.9,
