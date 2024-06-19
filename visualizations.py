@@ -49,12 +49,13 @@ def room_vs_rent(df):
     # Calculate average rent per room type
     room_type_rent = df.groupby('Type')['Rent'].mean().sort_values(ascending=True).reset_index()
 
-    # Create the Plotly barplot
-    fig = px.bar(room_type_rent, x='Type', y='Rent', 
-                title='Tipo de Alojamiento vs Precio del Alquiler',
-                labels={'Type': 'Tipo de Alojamiento', 'Rent': 'Precio del Alquiler'},
-                color='Rent',
-                color_continuous_scale='Viridis')  # More modern color scale
+    # Create the Plotly horizontal bar chart
+    fig = px.bar(room_type_rent, y='Type', x='Rent', 
+                 orientation='h',  # Horizontal orientation
+                 title='Tipo de Alojamiento vs Precio del Alquiler',
+                 labels={'Type': 'Tipo de Alojamiento', 'Rent': 'Precio medio del Alquiler'},
+                 color='Rent',
+                 color_continuous_scale='rainbow')  # More modern color scale
 
     # Customize the layout
     fig.update_layout(
@@ -72,14 +73,18 @@ def room_vs_rent(df):
             'yanchor': 'top'
         },
         height=600,
-        yaxis=dict(showgrid=False)
+        xaxis=dict(showgrid=False),
+        yaxis=dict(
+            title='Tipo de Alojamiento',
+            showgrid=False
+        )
     )
 
     # Add annotations for the bars
     for idx, row in room_type_rent.iterrows():
         fig.add_annotation(
-            x=row['Type'],
-            y=row['Rent'] + 70000,  # Adjust this value to position the annotation
+            x=row['Rent'],  # Position based on Rent value
+            y=row['Type'],
             text=f"{row['Rent']:,.2f}",
             showarrow=False,
             font=dict(size=12, color='white')
@@ -142,8 +147,8 @@ def city_area_rent_graph(df):
 
     # Create the Plotly barplot for Rent
     fig2 = px.bar(city_area_rent, x='City', y='Rent', 
-                  title='City vs Average Rent',
-                  labels={'City': 'City', 'Rent': 'Average Rent'},
+                  title='Alquiler medio por ciudad',
+                  labels={'City': 'Ciudad', 'Rent': 'Alquiler medio'},
                   color='Rent',
                   color_continuous_scale='algae')
 
@@ -162,7 +167,17 @@ def city_area_rent_graph(df):
             'xanchor': 'center',
             'yanchor': 'top'
         },
-        yaxis=dict(range=[0, 110000], showgrid=False)
+        yaxis=dict(range=[0, 250000], showgrid=False)
     )
+    for idx, row in city_area_rent.iterrows():
+        y_offset = row['Rent'] * 0.1  # Adjust the factor for spacing
+        fig2.add_annotation(
+            x=row['City'],
+            y=row['Rent'] + y_offset,
+            text=f"{row['Rent']:,.2f}",
+            showarrow=False,
+            font=dict(size=12, color='white')
+        )
+
 
     st.plotly_chart(fig2, use_container_width=True)
