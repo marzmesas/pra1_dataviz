@@ -55,12 +55,12 @@ def main():
 
         # Depending on the selection, call the corresponding function
         if graph_type == 'Ubicaciones más caras en relación a su superficie':
-            n_loc = st.number_input('Enter number of locations', min_value=1, max_value=15, value=5, step=1)
+            n_loc = st.number_input('Introduzca un número de ubicaciones para la comparativa', min_value=1, max_value=15, value=5, step=1)
             visualizations.top_n_locations(df, n_loc)
         if graph_type == 'Precio medio por tipo de alojamiento':
             visualizations.room_vs_rent(df)
         if graph_type == 'Tipos de propiedades a lo largo de los años':
-            year = st.number_input('Enter your desired year', min_value=df['year'].unique().min(), max_value=df['year'].unique().max(), value=df['year'].unique().min(), step=1)
+            year = st.number_input('Año de búsqueda deseado', min_value=df['year'].unique().min(), max_value=df['year'].unique().max(), value=df['year'].unique().min(), step=1)
             visualizations.rental_properties_pie_chart(df,year)
         if graph_type == 'Comparativa entre ciudades':
             visualizations.city_area_rent_graph(df)
